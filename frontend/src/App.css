@@ -1,38 +1,114 @@
-.App {
-  text-align: center;
+/* Remover o estilo de caixa padrão */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app-container {
+  background: #111;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group {
+  margin: 10px 0;
+  width: 500px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group label {
+  font-size: 0.825rem;
+  margin-left: 10px;
+}
+
+.form-group label {
+  color: #eee;
+  font-weight: 500;
+}
+
+.input-error {
+  border: 1px solid rgb(255, 72, 72); /* Usar estilo do Bootstrap */
+}
+
+.error-message {
+  color: rgb(255, 72, 72);
+  font-size: 0.75rem;
+  margin-top: 8px;
+}
+
+/* Remover estilos personalizados de input, utilizando Bootstrap */
+.form-control {
+  background-color: #444;
+  color: #eee;
+}
+
+.form-control::placeholder {
+  color: #999;
+}
+
+.form-group select {
+  background-color: #444;
+  color: #eee;
+  appearance: none; /* Remover o estilo padrão do select */
+}
+
+/* Botão estilizado */
+.btn-custom {
+  border-radius: 5px;
+  color: #eee;
+  background-color: #49a1b8;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: all 500ms ease;
+}
+
+.btn-custom:hover {
+  background-color: #61dbfb;
+}
+
+/* Estilo do input group com Bootstrap */
+.input-group-text {
+  background-color: #333 !important;
+  height: 100% !important;
+  color: #eee !important;
+  border: 1px solid #FFF !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  padding: 5px 10px; /* Ajustar o espaçamento interno */
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Ajustar a posição da label acima do campo */
+.form-group label {
+  color: #eee;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.btn.btn-custom {
+  width: 100%;
 }
