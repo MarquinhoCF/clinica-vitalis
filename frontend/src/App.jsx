@@ -1,9 +1,9 @@
-import PatientForm from "./components/PatientForm";
+import InitialPage from "./components/InitialPage";
 
 import "./App.css";
 
 const App = () => {
-  return <PatientForm />;
+  return <InitialPage />;
 };
 
 export default App;
