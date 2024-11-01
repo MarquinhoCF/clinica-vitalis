@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Header.css';
 
-const Header = ({ logo }) => {
+function Header({ logo }) {
     return (
         <header className="header d-flex justify-content-between align-items-center p-3 mb-4 border-bottom">
             <div className="d-flex align-items-center">
