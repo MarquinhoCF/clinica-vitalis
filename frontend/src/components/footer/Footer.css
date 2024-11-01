@@ -1,0 +1,17 @@
+.footer {
+    background-color: #222;
+}
+
+.footer-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.footer-link {
+    color: #49a1b8;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: #61dbfb;
+}
