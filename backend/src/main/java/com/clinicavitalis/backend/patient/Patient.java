@@ -15,16 +15,30 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Patient {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
+
+    @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;
+
+    @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
+
+    @Column(name = "weight", precision = 5, scale = 2)
     private Long weight;
+
+    @Column(name = "height", precision = 3, scale = 2)
     private Long height;
+
+    @Column(name = "uf", nullable = false, length = 2)
     private String uf;
 
-    public Patient(PatientRequestDTO data){
+    public Patient(PatientRequestDTO data) {
         this.name = data.name();
         this.cpf = data.cpf();
         this.birthdate = data.birthdate();
@@ -32,5 +46,4 @@ public class Patient {
         this.height = data.height();
         this.uf = data.uf();
     }
-    
 }

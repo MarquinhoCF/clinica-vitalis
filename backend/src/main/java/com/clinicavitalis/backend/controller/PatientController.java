@@ -16,7 +16,7 @@ import com.clinicavitalis.backend.patient.PatientRequestDTO;
 import com.clinicavitalis.backend.patient.PatientResponseDTO;
 
 @RestController
-@RequestMapping("/paciente")
+@RequestMapping("/patient")
 public class PatientController {
     
     @Autowired
