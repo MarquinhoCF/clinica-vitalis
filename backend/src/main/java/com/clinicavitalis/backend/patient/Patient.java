@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import com.clinicavitalis.backend.utils.DateUtils;
+
 @Table(name = "patient")
 @Entity(name = "Patient")
 @Getter
@@ -26,7 +28,7 @@ public class Patient {
     @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @Column(name = "birthdate", nullable = false)
+    @Column(name = "birthdate")
     private LocalDate birthdate;
 
     @Column(name = "weight", precision = 5, scale = 2)
@@ -39,11 +41,20 @@ public class Patient {
     private String uf;
 
     public Patient(PatientRequestDTO data) {
+
         this.name = data.name();
-        this.cpf = data.cpf();
-        this.birthdate = data.birthdate();
-        this.weight = data.weight();
-        this.height = data.height();
+        this.cpf = data.cpf().replaceAll("\\D", "");
+        
+        if (data.birthdate() != null)
+            this.birthdate = DateUtils.convertStringToLocalDate(data.birthdate());
+        
+        if (data.weight() != null)
+            this.weight = data.weight();
+        
+        if (data.height() != null)
+            this.height = data.height();
+        
         this.uf = data.uf();
     }
+
 }
