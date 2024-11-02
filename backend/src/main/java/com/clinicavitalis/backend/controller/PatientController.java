@@ -22,6 +22,7 @@ import com.clinicavitalis.backend.patient.PatientRepository;
 import com.clinicavitalis.backend.patient.PatientRequestDTO;
 import com.clinicavitalis.backend.patient.PatientResponseDTO;
 import com.clinicavitalis.backend.utils.EncryptionUtils;
+import com.clinicavitalis.backend.utils.StateUtils;
 import com.clinicavitalis.backend.utils.ValidationUtils;
 
 @RestController
@@ -138,7 +139,10 @@ public class PatientController {
         for (Patient patient : patients) {
             String uf = patient.getUf();
             if (uf != null) {
-                stateCounts.put(uf, stateCounts.get(uf) + 1);
+                String stateName = StateUtils.getStateNameBySigla(uf);
+                if (stateName != null) {
+                    stateCounts.put(stateName, stateCounts.get(stateName) + 1);
+                }
             }
         }
 

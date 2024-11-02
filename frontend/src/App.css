@@ -34,3 +34,15 @@ body,
   color: #1C52B2;
   font-size: 4.5rem;
 }
+
+.map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-card {
+  max-width: 800px;
+  width: 100%;
+}

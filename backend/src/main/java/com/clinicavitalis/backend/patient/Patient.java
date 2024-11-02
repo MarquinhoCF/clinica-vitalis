@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.clinicavitalis.backend.utils.DateUtils;
+import com.clinicavitalis.backend.utils.StateUtils;
 
 @Table(name = "patient")
 @Entity(name = "Patient")
@@ -93,7 +94,10 @@ public class Patient {
             for (int i = 0; i < estados.length(); i++) {
                 JSONObject estado = estados.getJSONObject(i);
                 String sigla = estado.getString("sigla");
-                stateCounts.put(sigla, 0);
+                String nomeEstado = StateUtils.getStateNameBySigla(sigla);
+                if (nomeEstado != null) {
+                    stateCounts.put(nomeEstado, 0);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

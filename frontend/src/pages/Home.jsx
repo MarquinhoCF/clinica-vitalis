@@ -47,10 +47,11 @@ const Home = () => {
                     </ButtonGroup>
                 </section>
 
-                <div className="container mt-5">
-                    <Card>
+                <div className="container map-container text-center mt-5">
+                    <Card className="map-card">
                         <Card.Body>
-                            <Card.Title className="text-center">Mapa de Pacientes por Estado</Card.Title>
+                            <Card.Title className="text-center">Temos Pacientes Espalhados por todo Brasil</Card.Title>
+                            <Card.Text className="text-center">Clique em um estado para ver detalhes</Card.Text>
                             <LeafletMap />
                         </Card.Body>
                     </Card>
