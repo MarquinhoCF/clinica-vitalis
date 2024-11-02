@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Polygon, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import geometries from '../../data/geometries.json';
-import './LeafletMap.css'
+import '../../styles/LeafletMap.css'
 
 const LeafletMap = () => {
     const [ufData, setUfData] = useState(geometries.features || []);
@@ -27,13 +27,13 @@ const LeafletMap = () => {
         console.log('Dados dos pacientes:', patientCounts);
     }, []);
 
-    const getPolygonStyle = (state) => {
+    const getPolygonStyle = (state, index) => {
         const stateName = state.properties.NM_ESTADO;
         const count = patientCounts[stateName] || 0;
         return {
             color: '#007bff',
             weight: 2,
-            fillColor: count > 0 ? '#00FF00' : '#FFFFFF',
+            fillColor: index === hoveredState ? '#007bff' : count > 0 ? '#00FF00' : '#999',
             fillOpacity: 0.5,
         };
     };
@@ -41,8 +41,8 @@ const LeafletMap = () => {
     return (
         <MapContainer center={brazilPosition} zoom={4}>
             <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a> contributors'
             />
             {ufData.map((uf, index) => {
                 const polygons = uf.geometry.coordinates;

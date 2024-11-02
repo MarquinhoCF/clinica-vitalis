@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './Header.css';
+import '../../styles/Header.css';
 
 function Header({ logo }) {
     const navigate = useNavigate();
