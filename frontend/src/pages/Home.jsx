@@ -39,7 +39,7 @@ const Home = () => {
                             variant="secondary" 
                             size="lg" 
                             style={{ minWidth: '250px' }}
-                            onClick={() => navigate('/comingSoon')}
+                            onClick={() => navigate('/registerNurse')}
                         >
                             Registrar Enfermeiros
                         </Button>

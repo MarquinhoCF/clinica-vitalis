@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from './pages/Home';
 import PatientRegister from './pages/PatientRegister';
+import NurseRegister from './pages/NurseRegister';
 import ComingSoon from './pages/ComingSoon';
 import NotFound from './pages/NotFound';
 
@@ -26,6 +27,12 @@ function App() {
           path="/registerPatient"
           element={
             <PatientRegister />
+          } 
+        />
+        <Route 
+          path="/registerNurse"
+          element={
+            <NurseRegister />
           } 
         />
         <Route 
