@@ -31,11 +31,11 @@ public class Patient {
     @Column(name = "birthdate")
     private LocalDate birthdate;
 
-    @Column(name = "weight", precision = 5, scale = 2)
-    private Long weight;
+    @Column(name = "weight")
+    private Double weight;
 
-    @Column(name = "height", precision = 3, scale = 2)
-    private Long height;
+    @Column(name = "height")
+    private Double height;
 
     @Column(name = "uf", nullable = false, length = 2)
     private String uf;
@@ -46,7 +46,7 @@ public class Patient {
         this.cpf = data.cpf().replaceAll("\\D", "");
         
         if (data.birthdate() != null)
-            this.birthdate = DateUtils.convertStringToLocalDate(data.birthdate());
+            this.birthdate = DateUtils.parseCustomDate(data.birthdate());
         
         if (data.weight() != null)
             this.weight = data.weight();

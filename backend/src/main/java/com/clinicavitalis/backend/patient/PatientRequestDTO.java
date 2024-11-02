@@ -4,8 +4,8 @@ public record PatientRequestDTO(
         String name, 
         String cpf, 
         String birthdate,
-        Long weight, 
-        Long height, 
+        Double weight, 
+        Double height, 
         String uf
     ) {
     

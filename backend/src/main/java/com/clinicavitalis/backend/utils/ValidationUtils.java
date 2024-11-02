@@ -1,12 +1,8 @@
 package com.clinicavitalis.backend.utils;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class ValidationUtils {
-
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static boolean isValidCPF(String cpf) {
         cpf = cpf.replaceAll("\\D", "");
@@ -41,31 +37,17 @@ public class ValidationUtils {
         if (birthdateString == null || birthdateString.isEmpty()) {
             return false;
         }
-        
-        try {
-            LocalDate birthdate = LocalDate.parse(birthdateString, DATE_FORMAT);
-            
-            System.out.println(birthdate);
 
-            return isValidBirthdate(birthdate);
-        } catch (DateTimeParseException e) {
-            return false;
+        LocalDate birthdate = DateUtils.parseISODate(birthdateString);
+        if (birthdate == null) {
+            birthdate = DateUtils.parseCustomDate(birthdateString);
         }
+
+        return birthdate != null && isValidBirthdate(birthdate);
     }
     
     public static boolean isValidBirthdate(LocalDate birthdate) {
-        System.out.println(birthdate);
-        System.out.println(LocalDate.now());
-        System.out.println(birthdate.isBefore(LocalDate.now()));
         return birthdate.isBefore(LocalDate.now());
-    }
-
-    public static LocalDate convertStringToLocalDate(String birthdateString) {
-        try {
-            return LocalDate.parse(birthdateString, DATE_FORMAT);
-        } catch (DateTimeParseException e) {
-            return null;
-        }
     }
 
 }

@@ -7,8 +7,8 @@ public record PatientResponseDTO(
         String name, 
         String cpf, 
         LocalDate birthdate, 
-        Long weight, 
-        Long height, 
+        Double weight, 
+        Double height, 
         String uf
     ) {
     
