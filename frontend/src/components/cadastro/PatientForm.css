@@ -98,3 +98,7 @@
 .btn.btn-custom {
   width: 100%;
 }
+
+.alert {
+  max-width: 500px;
+}

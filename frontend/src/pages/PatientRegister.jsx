@@ -1,7 +1,7 @@
 import React from 'react';
 import PatientForm from '../components/cadastro/PatientForm';
 
-const Cadastro = () => {
+const PatientRegister = () => {
     return (
         <>
             <div className="app-container">
@@ -11,4 +11,4 @@ const Cadastro = () => {
     );
 };
 
-export default Cadastro;
+export default PatientRegister;
