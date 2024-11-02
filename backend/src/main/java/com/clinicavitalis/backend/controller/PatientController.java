@@ -3,6 +3,8 @@ package com.clinicavitalis.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import com.clinicavitalis.backend.patient.Patient;
 import com.clinicavitalis.backend.patient.PatientRepository;
 import com.clinicavitalis.backend.patient.PatientRequestDTO;
 import com.clinicavitalis.backend.patient.PatientResponseDTO;
+import com.clinicavitalis.backend.utils.EncryptionUtils;
 import com.clinicavitalis.backend.utils.ValidationUtils;
 
 @RestController
@@ -25,6 +28,16 @@ public class PatientController {
     
     @Autowired
     private PatientRepository repository;
+
+    private static final SecretKey secretKey;
+
+    static {
+        try {
+            secretKey = EncryptionUtils.getSecretKey();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate secret key", e);
+        }
+    }
 
     //@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -66,9 +79,19 @@ public class PatientController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body("Erro: O campo 'UF' é obrigatório.");
         }
-        
-        // Salvar paciente
+
+        String encryptedCpf;
+        try {
+            encryptedCpf = EncryptionUtils.encrypt(data.cpf().replaceAll("\\D", ""), secretKey);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao criptografar o CPF.");
+        }
+ 
+        // Salvar paciente com CPF criptografado
         Patient patientData = new Patient(data);
+        patientData.setCpf(encryptedCpf);
         repository.save(patientData);
 
         // Resposta de sucesso
@@ -82,7 +105,18 @@ public class PatientController {
     @GetMapping
     public List<PatientResponseDTO> getAll(){
 
-        List<PatientResponseDTO> patientList = repository.findAll().stream().map(PatientResponseDTO::new).toList();
+        List<Patient> patients = repository.findAll();
+
+        List<PatientResponseDTO> patientList = patients.stream().map(patient -> {
+            try {
+                String decryptedCpf = EncryptionUtils.decrypt(patient.getCpf(), secretKey);
+                return new PatientResponseDTO(patient.getId(), patient.getName(), decryptedCpf, patient.getBirthdate(), patient.getWeight(), patient.getHeight(), patient.getUf());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).filter(dto -> dto != null).toList(); 
+
         return patientList;
     }
 
