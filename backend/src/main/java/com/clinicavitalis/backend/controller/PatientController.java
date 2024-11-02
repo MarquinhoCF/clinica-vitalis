@@ -1,6 +1,8 @@
 package com.clinicavitalis.backend.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.crypto.SecretKey;
@@ -20,6 +22,7 @@ import com.clinicavitalis.backend.patient.PatientRepository;
 import com.clinicavitalis.backend.patient.PatientRequestDTO;
 import com.clinicavitalis.backend.patient.PatientResponseDTO;
 import com.clinicavitalis.backend.utils.EncryptionUtils;
+import com.clinicavitalis.backend.utils.StateUtils;
 import com.clinicavitalis.backend.utils.ValidationUtils;
 
 @RestController
@@ -118,6 +121,32 @@ public class PatientController {
         }).filter(dto -> dto != null).toList(); 
 
         return patientList;
+    }
+
+    //@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/countByState")
+    public ResponseEntity<Map<String, Integer>> countPatientsByState() {
+
+        Map<String, Integer> stateCounts = new HashMap<>();
+
+        // Inicializa o mapa com todas as siglas de estados com contagem zero
+        Patient.initStateCounts(stateCounts);
+
+        List<Patient> patients = repository.findAll();
+
+        // Conta os pacientes por estado
+        for (Patient patient : patients) {
+            String uf = patient.getUf();
+            if (uf != null) {
+                String stateName = StateUtils.getStateNameBySigla(uf);
+                if (stateName != null) {
+                    stateCounts.put(stateName, stateCounts.get(stateName) + 1);
+                }
+            }
+        }
+
+        return ResponseEntity.ok(stateCounts);
     }
 
 }

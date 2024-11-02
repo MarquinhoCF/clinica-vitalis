@@ -7,8 +7,6 @@ import SelectInput from './fields/SelectInput';
 import DateInput from './fields/DateInput';
 import { FiLoader } from "react-icons/fi";
 import { api } from '../../lib/axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './PatientForm.css';
 
 function PatientForm() {
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();

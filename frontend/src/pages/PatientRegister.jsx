@@ -1,10 +1,11 @@
 import React from 'react';
 import PatientForm from '../components/cadastro/PatientForm';
+import '../styles/PatientRegister.css';
 
 const PatientRegister = () => {
     return (
         <>
-            <div className="app-container">
+            <div className="form-container">
                 <PatientForm />
             </div>
         </>
