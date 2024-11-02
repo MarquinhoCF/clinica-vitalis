@@ -1,34 +1,51 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Icon } from 'leaflet';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Polygon } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import './Map.css';
+import geometries from '../../data/geometries.json';
+import './Map.css'
 
 const LeafletMap = () => {
-    const position = [51.505, -0.09];
+    const [ufData, setUfData] = useState(geometries.features || []);
+    const [hoveredState, setHoveredState] = useState(null);
+    const brazilPosition = [-15.7801, -53.9292];
+
+    useEffect(() => {
+        
+    }, [ufData]);
+
+    const getPolygonStyle = (state, index) => ({
+        color: '#007bff',
+        weight: 2,
+        fillColor: index === hoveredState ? '#007bff' : (state.properties.count > 0 ? '#00FF00' : '#FFFFFF'),
+        fillOpacity: 0.5
+    });
 
     return (
-        <>
-            <MapContainer center={position} zoom={13}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker 
-                    position={position} 
-                    icon={
-                        new Icon({
-                            iconUrl: require('leaflet/dist/images/marker-icon.png'),
-                            iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-                            shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-                        })
-                    }
-                >
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
-            </MapContainer>
-        </>
+        <MapContainer center={brazilPosition} zoom={4}>
+            <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+            />
+            {ufData.map((uf, index) => {
+                const polygons = uf.geometry.coordinates;
+
+                return polygons.map((polygon, polyIndex) => (
+                    <Polygon 
+                        key={`${index}-${polyIndex}`}
+                        positions={polygon[0].map(coord => [coord[1], coord[0]])}
+                        pathOptions={getPolygonStyle(uf, index)}
+                        eventHandlers={{
+                            mouseover: () => {
+                                setHoveredState(index);
+                            },
+                            mouseout: () => {
+                                setHoveredState(null);
+                            },
+                        }}
+                    />
+                ));
+            })}
+        </MapContainer>
     );
 };
 
