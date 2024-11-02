@@ -4,7 +4,7 @@ import PatientForm from '../components/cadastro/PatientForm';
 const PatientRegister = () => {
     return (
         <>
-            <div className="app-container">
+            <div className="form-container">
                 <PatientForm />
             </div>
         </>

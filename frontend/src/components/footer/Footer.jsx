@@ -1,8 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Footer.css';
 
 const Footer = () => {
+    const navigate = useNavigate();
+
+    function handleNavigation(endpoint) {
+        if (endpoint) {
+            navigate(endpoint);
+        } else {
+            navigate('/comingSoon');
+        }
+    }
+
     return (
         <footer className="footer text-white bg-dark py-4 mt-auto">
             <div className="container">
@@ -14,10 +25,18 @@ const Footer = () => {
                     <div className="col-md-4">
                         <h5 className="footer-title">Links Úteis</h5>
                         <ul className="list-unstyled">
-                            <li><a href="#home" className="footer-link">Início</a></li>
-                            <li><a href="#servicos" className="footer-link">Serviços</a></li>
-                            <li><a href="#sobre" className="footer-link">Sobre Nós</a></li>
-                            <li><a href="#contato" className="footer-link">Contato</a></li>
+                            <li>
+                                <button onClick={() => handleNavigation('/')} className="footer-link btn btn-link text-decoration-none">Início</button>
+                            </li>
+                            <li>
+                                <button onClick={() => handleNavigation()} className="footer-link btn btn-link text-decoration-none">Serviços</button>
+                            </li>
+                            <li>
+                                <button onClick={() => handleNavigation()} className="footer-link btn btn-link text-decoration-none">Sobre Nós</button>
+                            </li>
+                            <li>
+                                <button onClick={() => handleNavigation()} className="footer-link btn btn-link text-decoration-none">Contato</button>
+                            </li>
                         </ul>
                     </div>
                     <div className="col-md-4">
