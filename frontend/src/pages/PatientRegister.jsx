@@ -1,5 +1,5 @@
 import React from 'react';
-import PatientForm from '../components/cadastro/PatientForm';
+import PatientForm from '../components/forms/PatientForm';
 import '../styles/PatientRegister.css';
 
 const PatientRegister = () => {
