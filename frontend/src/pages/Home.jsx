@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, ButtonGroup, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logo_vitalis.png';
+import LeafletMap from '../components/map/LeafletMap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import logo from '../assets/logo_vitalis.png';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -50,9 +51,7 @@ const Home = () => {
                     <Card>
                         <Card.Body>
                             <Card.Title className="text-center">Mapa de Pacientes por Estado</Card.Title>
-                            <div id="map" style={{ height: '400px' }}>
-                                
-                            </div>
+                            <LeafletMap />
                         </Card.Body>
                     </Card>
                 </div>
