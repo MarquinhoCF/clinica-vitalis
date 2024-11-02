@@ -5,7 +5,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import logo from '../src/assets/logo_vitalis.png';
 
-import Cadastro from './pages/Cadastro';
+import PatientRegister from './pages/PatientRegister';
 
 function App() {
   return (
@@ -15,11 +15,9 @@ function App() {
         <Route 
           path="/cadastro"
           element={
-            <Cadastro />
+            <PatientRegister />
           } 
         />
-        {/* <Route path="/about" component={About} />
-        <Route component={NotFound} /> */}
       </Routes>
       <Footer />
     </BrowserRouter>
