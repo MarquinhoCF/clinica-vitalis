@@ -1,8 +1,8 @@
 import React from 'react';
 import NurseForm from '../components/forms/NurseForm';
-import '../styles/PatientRegister.css';
+import '../styles/Form.css';
 
-const PatientRegister = () => {
+const NurseRegister = () => {
     return (
         <>
             <div className="form-container">
@@ -12,4 +12,4 @@ const PatientRegister = () => {
     );
 };
 
-export default PatientRegister;
+export default NurseRegister;

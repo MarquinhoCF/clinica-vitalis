@@ -7,6 +7,7 @@ import logo from '../src/assets/logo_vitalis.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from './pages/Home';
+import Login from './pages/Login';
 import PatientRegister from './pages/PatientRegister';
 import NurseRegister from './pages/NurseRegister';
 import ComingSoon from './pages/ComingSoon';
@@ -22,6 +23,12 @@ function App() {
           element={
             <Home />
           }
+        />
+        <Route 
+          path="/login"
+          element={
+            <Login />
+          } 
         />
         <Route 
           path="/registerPatient"

@@ -38,6 +38,9 @@ function Header({ logo }) {
                     <li className="nav-item">
                         <button className="nav-link btn btn-link text-decoration-none" onClick={() => handleNavigation()}>Contato</button>
                     </li>
+                    <li className="nav-item">
+                        <button className="nav-link btn btn-link text-light text-decoration-none" onClick={() => handleNavigation('/login')}>Fazer Login</button>
+                    </li>
                 </ul>
             </nav>
         </header>
