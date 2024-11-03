@@ -1,3 +1,6 @@
+src/main/resources/private_key.pem
+src/main/resources/public_key.pem
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
