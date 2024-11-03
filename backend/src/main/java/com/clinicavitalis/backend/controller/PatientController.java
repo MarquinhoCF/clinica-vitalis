@@ -61,7 +61,6 @@ public class PatientController {
         }
         
         if (data.birthdate() != null &&  !ValidationUtils.isValidBirthdate(data.birthdate())) {
-            System.out.println("Aloooouuu 3.1");
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body("Erro: A data de nascimento informada é inválida.");

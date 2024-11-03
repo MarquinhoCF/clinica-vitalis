@@ -1,5 +1,8 @@
-package com.clinicavitalis.backend.nurse;
+package com.clinicavitalis.backend.user;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.clinicavitalis.backend.login.LoginRequestDTO;
 import com.clinicavitalis.backend.role.Role;
 
 import jakarta.persistence.CascadeType;
@@ -18,18 +21,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "tb_nurse")
-@Entity(name = "Nurse")
+@Table(name = "tb_user")
+@Entity(name = "User")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Nurse {
+public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "nurse_id")
+    @Column(name = "user_id")
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -45,4 +48,8 @@ public class Nurse {
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
     
+
+    public boolean isLoginCorrect(LoginRequestDTO loginRequest, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequest.password(), this.password);
+    }
 }
