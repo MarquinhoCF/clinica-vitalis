@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import com.clinicavitalis.backend.utils.DateUtils;
 import com.clinicavitalis.backend.utils.StateUtils;
 
-@Table(name = "patient")
+@Table(name = "tb_patient")
 @Entity(name = "Patient")
 @Getter
 @Setter
@@ -31,6 +31,7 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "patient_id")
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
