@@ -25,23 +25,23 @@ import com.clinicavitalis.backend.user.User;
 public class AuthenticateController {
 
     private final JwtEncoder jwtEncoder;
-    private final UserRepository doctorRepository;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthenticateController(JwtEncoder jwtEncoder, UserRepository doctorRepository, BCryptPasswordEncoder passwordEncoder) {
+    public AuthenticateController(JwtEncoder jwtEncoder, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.jwtEncoder = jwtEncoder;
-        this.doctorRepository = doctorRepository;
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
-        Optional<User> user = doctorRepository.findByCpf(loginRequest.cpf());
-
-        if (user.isPresent()) {
+        Optional<User> user = userRepository.findByCpf(loginRequest.cpf());
+        
+        if (!user.isPresent()) {
             throw new BadCredentialsException("O usuário não foi encontrado.");
-        } else if (user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
+        } else if (!user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
             throw new BadCredentialsException("A senha está incorreta.");
         }
 
