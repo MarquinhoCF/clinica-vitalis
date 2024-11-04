@@ -46,8 +46,22 @@ public class PatientController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<String> savePatient(@RequestBody PatientRequestDTO data){
+        if (data.cpf() == null || data.cpf().isBlank()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Erro: O campo 'CPF' é obrigatório.");
+        }
 
-        Optional<Patient> existingPatient = repository.findByCpf(data.cpf().replaceAll("\\D", ""));
+        String encryptedCpf;
+        try {
+            encryptedCpf = EncryptionUtils.encrypt(data.cpf().replaceAll("\\D", ""), secretKey);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao criptografar o CPF.");
+        }
+
+        Optional<Patient> existingPatient = repository.findByCpf(encryptedCpf);
         if (existingPatient.isPresent()) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
@@ -81,22 +95,10 @@ public class PatientController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body("Erro: O campo 'UF' é obrigatório.");
         }
-
-        String encryptedCpf;
-        try {
-            encryptedCpf = EncryptionUtils.encrypt(data.cpf().replaceAll("\\D", ""), secretKey);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao criptografar o CPF.");
-        }
  
-        // Salvar paciente com CPF criptografado
-        Patient patientData = new Patient(data);
-        patientData.setCpf(encryptedCpf);
+        Patient patientData = new Patient(data, encryptedCpf);
         repository.save(patientData);
 
-        // Resposta de sucesso
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("Paciente cadastrado com sucesso!");

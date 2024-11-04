@@ -54,10 +54,10 @@ public class Patient {
 
     private static final String API_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/estados";
 
-    public Patient(PatientRequestDTO data) {
+    public Patient(PatientRequestDTO data, String encryptedCpf) {
 
         this.name = data.name();
-        this.cpf = data.cpf().replaceAll("\\D", "");
+        this.cpf = encryptedCpf;
         
         if (data.birthdate() != null)
             this.birthdate = DateUtils.parseCustomDate(data.birthdate());

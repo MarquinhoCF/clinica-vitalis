@@ -2,6 +2,8 @@ package com.clinicavitalis.backend.controller;
 
 import java.util.Optional;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import com.clinicavitalis.backend.role.RoleRepository;
 import com.clinicavitalis.backend.user.User;
 import com.clinicavitalis.backend.user.UserRepository;
 import com.clinicavitalis.backend.user.UserRequestDTO;
+import com.clinicavitalis.backend.utils.EncryptionUtils;
 
 @RestController
 @RequestMapping("/api/user")
@@ -30,6 +33,16 @@ public class UserController {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
+    private static final SecretKey secretKey;
+
+    static {
+        try {
+            secretKey = EncryptionUtils.getSecretKey();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate secret key", e);
+        }
+    }
+
     @Autowired
     public UserController(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
@@ -38,7 +51,21 @@ public class UserController {
     @PostMapping
     @PreAuthorize("hasAuthority('SCOPE_DOCTOR')")
     public ResponseEntity<String> newNurseUser(@RequestBody UserRequestDTO data) {
-        
+        if (data.cpf() == null || data.cpf().isBlank()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Erro: O campo 'CPF' é obrigatório.");
+        }
+
+        String encryptedCpf;
+        try {
+            encryptedCpf = EncryptionUtils.encrypt(data.cpf().replaceAll("\\D", ""), secretKey);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao criptografar o CPF.");
+        }
+
         Optional<Role> nurseRole = roleRepository.findByName(Role.Values.NURSE.name());
         if (!nurseRole.isPresent()) {
             return ResponseEntity
@@ -77,10 +104,9 @@ public class UserController {
                     .body("Erro: As senhas informadas não conferem.");
         }
 
-        User newUser = new User(data, nurseRole.get(), passwordEncoder);
+        User newUser = new User(data, encryptedCpf, nurseRole.get(), passwordEncoder);
         userRepository.save(newUser);
 
-        // Resposta de sucesso
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("Enfermeiro cadastrado com sucesso!");

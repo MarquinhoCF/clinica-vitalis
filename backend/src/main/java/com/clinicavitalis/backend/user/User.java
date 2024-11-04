@@ -17,7 +17,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -56,10 +55,10 @@ public class User {
     )
     private Set<Role> roles;
     
-    public User(UserRequestDTO data, Role role, PasswordEncoder passwordEncoder) {
+    public User(UserRequestDTO data, String encryptedCpf, Role role, PasswordEncoder passwordEncoder) {
 
         this.name = data.name();
-        this.cpf = data.cpf().replaceAll("\\D", "");
+        this.cpf = encryptedCpf;
         this.password = passwordEncoder.encode(data.password());
         this.roles = Set.of(role);
 
