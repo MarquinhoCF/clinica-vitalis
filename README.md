@@ -36,7 +36,7 @@ Obs: É recomendado utilizar as mesmas versões
 Siga os passos abaixo para instalar e rodar a aplicação.
 
 1. **Gerar Chaves RSA**
-   - Acesse o diretório `resources` do backend.
+   - Navegue até o diretório `resources` a partir do path `backend/src/main/resources`.
    - Execute os seguintes comandos para gerar a chave privada e a chave pública:
    - Obs: Esses comandos são para o sistema operacional Windows, provavelmente será necessário pesquisar o comando equivalente para outros sistemas operacionais.
      ```bash
@@ -45,7 +45,7 @@ Siga os passos abaixo para instalar e rodar a aplicação.
      ```
 
 2. **Configurar o Banco de Dados**
-   - Utilize o Docker no diretório raiz do projeto (onde está o arquivo "docker-compose.yml") para subir um container MySQL:
+   - Utilize o Docker no diretório raiz do projeto (onde está o arquivo `docker-compose.yml`) para subir um container MySQL:
      ```bash
      docker-compose up -d
      ```
