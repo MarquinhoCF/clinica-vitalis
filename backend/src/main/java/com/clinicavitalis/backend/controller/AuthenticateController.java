@@ -65,6 +65,6 @@ public class AuthenticateController {
 
         String jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return ResponseEntity.ok(new LoginResponseDTO(jwtValue, expiresIn));
+        return ResponseEntity.ok(new LoginResponseDTO(user.get().getName(), "Login realizado com sucesso.", jwtValue, expiresIn));
     }
 }

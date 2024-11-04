@@ -9,7 +9,7 @@ const PasswordInput = ({ label, register, name, placeholder, required, validate,
             placeholder={placeholder}
             {...register(name, { 
                 required, 
-                minLength: 7, 
+                minLength: 5, 
                 validate
             })}
         />
@@ -17,7 +17,7 @@ const PasswordInput = ({ label, register, name, placeholder, required, validate,
             <p className="error-message">{label} é obrigatório.</p>
         )}
         {errors?.[name]?.type === 'minLength' && (
-            <p className="error-message">{label} deve ter pelo menos 7 caracteres.</p>
+            <p className="error-message">{label} deve ter pelo menos 5 caracteres.</p>
         )}
         {errors?.[name]?.type === 'validate' && (
             <p className="error-message">As senhas não coincidem.</p>

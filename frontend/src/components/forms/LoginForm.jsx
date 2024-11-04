@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import TextInput from './fields/TextInput';
 import MaskedInput from './fields/MaskedInput';
 import PasswordInput from './fields/PasswordInput';
@@ -13,12 +14,47 @@ function PatientForm() {
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState(null);
 
+    const navigate = useNavigate();
+
     const onSubmit = async (data) => {
         setIsLoading(true);
 
-        console.log(data);
-        
-        setIsLoading(false);
+        try {
+            const response = await api.post("/authenticate/login", {
+                cpf: data.cpf,
+                password: data.password,
+            });
+
+            if (response.status >= 200 && response.status < 300) {
+                const { accessToken, username } = response.data;
+            
+                // Salva o token e o nome do usuário no localStorage
+                localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("username", username);
+                
+                // Sucesso: define mensagem de sucesso e tipo
+                setMessage("Login realizado com sucesso!");
+                setMessageType("success");
+                
+                // Resetar o formulário
+                reset({
+                    cpf: '',
+                    password: '',
+                });
+                
+                navigate('/');
+            } else {
+                // Erro: define mensagem de erro e tipo
+                setMessage(response.data.message || "Ocorreu um erro.");
+                setMessageType("danger");
+            }
+        } catch (error) {
+            // Exibe mensagem de erro do backend
+            setMessage(error.response?.data || "Erro ao cadastrar paciente.");
+            setMessageType("danger");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const closeMessage = () => {
