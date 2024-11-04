@@ -1,4 +1,4 @@
-# Sistema de Cadastro de Pacientes
+# Clinica Vitalis - Sistema de Cadastro de Pacientes
 
 Este projeto é uma aplicação web para o cadastro de pacientes em uma clínica, incluindo funcionalidades de autenticação e autorização.
 
@@ -36,14 +36,14 @@ Siga os passos abaixo para instalar e rodar a aplicação.
 1. **Gerar Chaves RSA**
    - Acesse o diretório `resources` do backend.
    - Execute os seguintes comandos para gerar a chave privada e a chave pública:
-   Obs: Esses comandos são para o sistema operacional Windows, provavelmente será necessário pesquisar o comando equivalente para outros sistemas operacionais.
+   - Obs: Esses comandos são para o sistema operacional Windows, provavelmente será necessário pesquisar o comando equivalente para outros sistemas operacionais.
      ```bash
      openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
      openssl rsa -in private_key.pem -pubout -out public_key.pem
      ```
 
 2. **Configurar o Banco de Dados**
-   - Utilize o Docker para subir um container MySQL:
+   - Utilize o Docker no diretório raiz do projeto (onde está o arquivo "docker-compose.yml") para subir um container MySQL:
      ```bash
      docker-compose up -d
      ```
@@ -86,6 +86,11 @@ Siga os passos abaixo para instalar e rodar a aplicação.
 
 8. Documentação disponível para instalação e configuração da aplicação.
 
+## Credenciais do usuário médico hard-coded
+
+- cpf: 155.180.030-64
+- password: 123456
+
 ## Status das Funcionalidades
 
 - **Funcionalidades concluídas**:
@@ -98,7 +103,7 @@ Siga os passos abaixo para instalar e rodar a aplicação.
   - 8 - Documentação de instalação
 
 - **Funcionalidade parcialmente concluída**:
-  - 7 - Sistema de Autenticação e Autorização (configuração de CORS não funcionou conforme esperado)
+  - 7 - Sistema de Autenticação e Autorização (configuração de CORS não funcionou conforme esperado, pois ao utilizar o Postman para testar a API as rotas pertidas funcionam, mas o servidor React não consegue acessar via axios)
 
 - **Funcionalidades não concluídas**:
   - 9 - Hospedagem da aplicação
@@ -107,4 +112,4 @@ Siga os passos abaixo para instalar e rodar a aplicação.
 
 ## Considerações Finais
 
-Certifique-se de que todas as dependências e configurações estejam corretas antes de executar a aplicação. Em caso de problemas, consulte a documentação das tecnologias utilizadas ou entre em contato para mais informações.
+O Teste prático foi muito desafiador e com certeza me fez aprofundar meus connhecimentos em criação de APIs REST, aprendi bastante sobre Spring Security e geração de tokens com JWT.
