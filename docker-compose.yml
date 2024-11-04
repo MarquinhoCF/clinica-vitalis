@@ -1,16 +1,18 @@
-version: '3.8'
-
 services:
   mysql:
-    image: mysql:8.0 # Você pode especificar a versão desejada do MySQL
+    image: mysql
     restart: always
     environment:
-      MYSQL_DATABASE: vitalis # Nome do banco de dados a ser criado
-      MYSQL_ROOT_PASSWORD: root # Senha do usuário root
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=123
+      - MYSQL_DATABASE=vitalis
+      - MYSQL_ROOT_PASSWORD=123
     ports:
-      - "3306:3306" # Porta padrão do MySQL
+      - "3306:3306"
+    expose:
+      - "3306"
     volumes:
-      - mysql_data:/var/lib/mysql # Persistência dos dados
+      - mysql_data:/var/lib/mysql
 
 volumes:
   mysql_data:

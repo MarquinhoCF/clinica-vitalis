@@ -1,15 +1,15 @@
 import React from 'react';
-import PatientForm from '../components/forms/PatientForm';
+import LoginForm from '../components/forms/LoginForm';
 import '../styles/Form.css';
 
-const PatientRegister = () => {
+const NurseRegister = () => {
     return (
         <>
             <div className="form-container">
-                <PatientForm />
+                <LoginForm />
             </div>
         </>
     );
 };
 
-export default PatientRegister;
+export default NurseRegister;
