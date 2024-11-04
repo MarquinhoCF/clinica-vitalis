@@ -4,11 +4,13 @@ Este projeto é uma aplicação web para o cadastro de pacientes em uma clínica
 
 ## Requisitos
 
-Antes de começar, verifique se você tem as seguintes versões instaladas:
+Antes de começar, verifique se você tem as seguintes requisitos instaladas:
+
+Obs: É recomendado utilizar as mesmas versões
 
 - **Node.js**: 20.11.0
 - **Java**: 17 (recomendada versão Zulu)
-- **Docker**
+- **Docker**: 27.0.3
 
 ## Tecnologias Utilizadas
 
