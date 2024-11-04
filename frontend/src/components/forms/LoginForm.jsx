@@ -101,7 +101,7 @@ function PatientForm() {
                 onClick={handleSubmit(onSubmit)}
                 disabled={isLoading}
             >
-                {isLoading ? <FiLoader className="animate-spin text-white" /> : 'Cadastrar Enfermeiro'}
+                {isLoading ? <FiLoader className="animate-spin text-white" /> : 'Fazer Login'}
             </button>
         </div>
     );
