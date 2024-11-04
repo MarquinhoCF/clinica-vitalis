@@ -3,6 +3,7 @@ package com.clinicavitalis.backend.config;
 import org.springframework.boot.CommandLineRunner;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,7 @@ public class DoctorUserConfig implements CommandLineRunner {
             newUser.setName("Doctor");
             newUser.setCpf("15518003064"); // CPF gerado aleatoriamente
             newUser.setPassword(passwordEncoder.encode("123456"));
-            newUser.setRole(roleDoctor.get());
+            newUser.setRoles(Set.of(roleDoctor.get()));
             userRepository.save(newUser);
             System.out.println("Doctor user created");
         }

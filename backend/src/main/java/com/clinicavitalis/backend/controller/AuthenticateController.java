@@ -2,6 +2,7 @@ package com.clinicavitalis.backend.controller;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.clinicavitalis.backend.login.LoginRequestDTO;
 import com.clinicavitalis.backend.login.LoginResponseDTO;
+import com.clinicavitalis.backend.role.Role;
 import com.clinicavitalis.backend.user.UserRepository;
 import com.clinicavitalis.backend.user.User;
 
@@ -46,13 +48,19 @@ public class AuthenticateController {
         }
 
         Instant now = Instant.now();
-        Long expiresIn = 300L;
+        Long expiresIn = 3600L;
+
+        var scopes = user.get().getRoles()
+                .stream()
+                .map(Role::getName)
+                .collect(Collectors.joining(" "));
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
             .issuer("backend")
             .subject(user.get().getId().toString())
             .expiresAt(now.plusSeconds(expiresIn))
             .issuedAt(now)
+            .claim("scope", scopes)
             .build();
 
         String jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

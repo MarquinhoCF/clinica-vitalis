@@ -1,5 +1,7 @@
 package com.clinicavitalis.backend.user;
 
+import java.util.Set;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.clinicavitalis.backend.login.LoginRequestDTO;
@@ -13,6 +15,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -44,10 +48,22 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-    private Role role;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
     
+    public User(UserRequestDTO data, Role role, PasswordEncoder passwordEncoder) {
+
+        this.name = data.name();
+        this.cpf = data.cpf().replaceAll("\\D", "");
+        this.password = passwordEncoder.encode(data.password());
+        this.roles = Set.of(role);
+
+    }
 
     public boolean isLoginCorrect(LoginRequestDTO loginRequest, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(loginRequest.password(), this.password);
